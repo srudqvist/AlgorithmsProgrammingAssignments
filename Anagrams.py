@@ -9,6 +9,9 @@
 ### 2021/08/31: Improvements in error handling has been made. User now gets a message saying what word is not a string.
 ###             
 
+"""
+Should header be done like this?
+"""
 
 #The test function conducts a series of tests by calling testPair.
 
@@ -18,6 +21,12 @@ def test():
     testPair(3,'arranged','deranged',False)
     testPair(4, "32", 32, False)
     testPair(5, "BigAndSmall", "bIGaNDsMALL", True)
+    testPair(6, "Nag a ram", "anagram", True)
+    testPair(7, "Slot Machines", "Cash lost in me", True)
+    testPair(8, "football", "laundry basket", False)
+
+
+
 
     
 	#YOUR ADDITIONAL TESTS GO HERE
