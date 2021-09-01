@@ -1,9 +1,13 @@
-# File: Anagrams.py
-# Author: Samuel Rudqvist
-# CSCI 0262 Algorithms
-# This program is an anagram checker. It checks two strings to see
-# if they are anagrams.
-
+### File: Anagrams.py
+### Author: Samuel Rudqvist
+### CSCI 0262 Algorithms
+### This program is an anagram checker. It checks two strings to see
+### if they are anagrams.
+###
+### Modification Log:
+### 2021/08/30: Created the file, copied test functions from Dr. Browning. def anagram() is ready to be tested.
+### 2021/08/31: Improvements in error handling has been made. User now gets a message saying what word is not a string.
+###             
 
 
 #The test function conducts a series of tests by calling testPair.
