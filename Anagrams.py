@@ -65,7 +65,6 @@ def anagram(word1,word2):
             return False
 
         if type(word2) != str:
-            print(type(word2))
             print("\nThe second word is not a string, please change word2 to a string.")
             return False
 
