@@ -30,7 +30,7 @@ def stringMatching(longText, searchString):
         stringLength = longTextLength - searchStringLength
 
         # Loop search through the longText string looking for the characters in searchString.
-        for posInText in range(0, stringLength):
+        for posInText in range(0, stringLength + 1):
             stringIndex = 0
             while stringIndex < searchStringLength and searchString[stringIndex] == longText[posInText + stringIndex]:
                 stringIndex = stringIndex + 1
@@ -63,7 +63,7 @@ def findLast(longText, searchString):
         searchStringLength = int(len(searchString))
         stringLength = longTextLength - searchStringLength
         lastOccurrence = 0
-        for posInText in range(0, stringLength):
+        for posInText in range(0, stringLength + 1):
             stringIndex = 0
             
             while stringIndex < searchStringLength and searchString[stringIndex] == longText[posInText + stringIndex]:
@@ -75,7 +75,7 @@ def findLast(longText, searchString):
 
             # When the entire string has been looped through, check if there has been an occurence
             # if not, return -1.
-            if posInText == stringLength - 1:
+            if posInText == stringLength:
                 if lastOccurrence == 0:
                     return -1
                 return lastOccurrence
@@ -100,6 +100,8 @@ def testA():
   testCaseA(3,"She sells sea shells by the seashore.","seashore",28)
   testCaseA(4, "Testing a STr1nG with uppercase and numbers", "string", -1)
   testCaseA(5, 123456, 23, -1)
+  testCaseA(6, "hallo thare", "e", 10)
+
   
 
 def testCaseB(testNumber,longText,searchString,expectedResult):
@@ -116,6 +118,7 @@ def testB():
   testCaseB(3,"She sells sea shells by the seashore.","sea",28)
   testCaseB(4, "So so So so So So soSo many occurrences here", "So", 20)
   testCaseB(5, "", "", -1)
+  testCaseB(6, "hello there", "e", 10)
 
 
 
