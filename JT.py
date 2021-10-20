@@ -10,9 +10,9 @@
 
 import time
 
-### --------------------------------------------------- ###
-###     PART A, CLASSES AND METHODS                     ###
-### --------------------------------------------------- ###
+### ---------------------------------------------------
+###     PART A, CLASSES AND METHODS
+### ---------------------------------------------------
 
 # The Element class takes the value and direction of an Element.
 class Element:
@@ -23,8 +23,19 @@ class Element:
     # Method to switch the direction of the "arrow"
     # The direction indicates wether the arrow is pointing left or right
     # Let 1 = right and -1 = left
+    
     def changeDirection(self):
-        self.direction = self.direction * -1
+        if self.direction == "right":
+            self.direction = "left"
+        elif self.direction == "left":
+            self.direction = "right"
+    
+    def getDirection(self):
+        return self.direction
+
+    def getValue(self):
+        return self.value
+
 
 
 # The Permutation class takes an array of Elements.
@@ -37,20 +48,19 @@ class Permutation:
     # Use this on an array of elements, give it the position of an element and it will 
     # return true if the element is mobile and false if it is not
     def isMobile(self, pos):
-
         try:
             element = self.ElementArray[pos]
             # Handles the case where elementLeft has pos -1 which is last in the list
-            if pos == 0 and element.direction == -1:
+            if pos == 0 and element.direction == "left":
                 raise IndexError
 
-            if element.direction == -1:
+            if element.direction == "left":
                 elementLeft = self.ElementArray[pos - 1]
                 if element.value > elementLeft.value:
                     return True
                 elif element.value < elementLeft.value:
                     return False
-            elif element.direction == 1:
+            elif element.direction == "right":
                 elementRight = self.ElementArray[pos + 1]
                 if element.value > elementRight.value:
                     return True
@@ -80,6 +90,7 @@ class Permutation:
                     mobileValue.append(list[i].value)
             
             largest = max(mobileValue) 
+
             for i in range(0, len(list)):
                 if list[i].value == largest:
                     return i
@@ -91,11 +102,16 @@ class Permutation:
         largestMobile = Permutation(list).largestMobile()
         direction = list[largestMobile].direction
         origList = []
-        if direction == 1:
+
+        if direction == "right":
             list[largestMobile], list[largestMobile + 1] = list[largestMobile + 1], list[largestMobile]
             return list
-        elif direction == -1:
+
+        elif direction == "left":
+            for i in range(0, len(list)):
+               pass
             list[largestMobile - 1], list[largestMobile] = list[largestMobile], list[largestMobile - 1]
+
             return list
     
     def printElements(self):
@@ -104,7 +120,6 @@ class Permutation:
         for i in range(0,len(self.ElementArray)):
             valueList.append(self.ElementArray[i].value)
             directionList.append(self.ElementArray[i].direction)
-            #print(self.ElementArray[i].value, self.ElementArray[i].direction)
         return valueList, directionList
 
 
@@ -113,26 +128,28 @@ class Permutation:
 ### -------------------------------------------- ###
 
 def permute(n):
+    print("\nPermute(",n,") called")
     elementList = []
     allPermutations = []
     for i in range(1,n + 1):
-        theElement = Element(i, -1)
+        theElement = Element(i, "left")
         elementList.append(theElement)
 
-    # initialized permutation list, this is the first one
     permutationList = Permutation(elementList)
+    print(permutationList.printElements()[0])
     allPermutations.append(permutationList.printElements()[0])
 
     while permutationList.isAnyMobile():
         largestMobile = permutationList.largestMobile()
         permValueList = permutationList.printElements()[0]
+
         newList = permutationList.nextPermutation()
         for i in range(0,len(elementList)):
             if permValueList[i] > permValueList[largestMobile]:
                 elementList[i].changeDirection()
-
+            else:
+                pass
         allPermutations.append(permutationList.printElements()[0])
-
 
     print(allPermutations)
 
@@ -140,7 +157,7 @@ def permute2(n):
     print("\nPermute(",n,") called")
     elementList = []
     for i in range(1,n + 1):
-        theElement = Element(i, -1)
+        theElement = Element(i, "left")
         elementList.append(theElement)
 
     # initialized permutation list, this is the first one
@@ -154,7 +171,8 @@ def permute2(n):
         for i in range(0,len(elementList)):
             if permValueList[i] > permValueList[largestMobile]:
                 elementList[i].changeDirection()
-
+            else:
+                pass
         print(permutationList.printElements()[0])
 
 ### -------------------------------------------- ###
@@ -165,19 +183,16 @@ def permuteTime(n):
     startTime = time.time()
     permute(n)
     endTime = time.time()
-    totTime = endTime - startTime
-    print("Printing the permutations of", n, "elements took", totTime, "seconds.")
-    return totTime
+    print("Printing the permutations of", n, "elements took", endTime - startTime, "seconds.")
 
 def permuteTime2(n):
     startTime = time.time()
     permute2(n)
     endTime = time.time()
-    totTime = endTime - startTime
-    print("Printing the permutations of", n, "elements took", totTime, "seconds.")
-    return totTime
+    print("Printing the permutations of", n, "elements took", endTime - startTime, "seconds.")
 
-
+permuteTime(3)
+#permuteTime2(3)
 
 
 
@@ -190,18 +205,12 @@ def permuteTime2(n):
 # -------------------------------- #
 # Test code for the Element class  #
 # -------------------------------- #
-
-
 def ElementClassTests():
-    print("\n###---------------------------------------------------###")
-    print("###                ELEMENT TESTS START                ###")
-    print("###---------------------------------------------------###")
-    print("All tests use the same list unless stated otherwise.\n")
-    myElement = Element(1, 1)
-    myElement2 = Element(3, -1)
-    myElement3 = Element(4, 1)
-    myElement4 = Element(7, -1)
-    myElement5 = Element(2, 1)
+    myElement = Element(1, "right")
+    myElement2 = Element(3, "left")
+    myElement3 = Element(4, "right")
+    myElement4 = Element(7, "left")
+    myElement5 = Element(2, "right")
 
     print("\nBefore changing any directions")
     print("Value1:", myElement.value, "Direction1:", myElement.direction)
@@ -229,24 +238,18 @@ def ElementClassTests():
     print("Value3:", myElement3.value, "Direction3:", myElement3.direction)
     print("Value4:", myElement4.value, "Direction4:", myElement4.direction)
     print("Value5:", myElement5.value, "Direction5:", myElement5.direction)
-    print("\n###---------------------------------------------------###")
-    print("###                 ELEMENT TESTS END                 ###")
-    print("###---------------------------------------------------###\n")
-   
+
+#ElementClassTests()
 
 # ------------------------------------ #
 # Test code for the Permutation class  #
 # ------------------------------------ #
 def PermutationClassTests():
-    print("\n###---------------------------------------------------###")
-    print("###             PERMUTATION TESTS START               ###")
-    print("###---------------------------------------------------###")
-    print("All tests use the same list unless stated otherwise.\n")
-    myElement = Element(1, 1)
-    myElement2 = Element(3, -1)
-    myElement3 = Element(4, 1)
-    myElement4 = Element(7, -1)
-    myElement5 = Element(2, 1)
+    myElement = Element(1, "right")
+    myElement2 = Element(3, "left")
+    myElement3 = Element(4, "right")
+    myElement4 = Element(7, "left")
+    myElement5 = Element(2, "right")
     elementList = [myElement, myElement2, myElement3, myElement4, myElement5]
     original = [myElement, myElement2, myElement3, myElement4, myElement5]
     myPerm = Permutation(elementList)
@@ -269,8 +272,6 @@ def PermutationClassTests():
             else:
                 print("The element at index", i, "is not mobile.")
 
-    # Tests to make sure the isAnyMobile function works properly
-    # 2 c)
     def anyMobileTests():
         print("\nTests 2 C):")
         if myPerm.isAnyMobile():
@@ -278,8 +279,6 @@ def PermutationClassTests():
         else:
             print("There are no mobile elements in the list.")
 
-    # Tests to make sure the largestMobile function works properly
-    # 2 d)
     def largestMobileTests():
         print("\nTests 2 D):")
         if myPerm.largestMobile() == -1:
@@ -287,10 +286,7 @@ def PermutationClassTests():
         else:
             print("The largest mobile element is found at position", myPerm.largestMobile())
 
-    # Tests to make sure the nextPermutation function works properly
-    # 2 e)
-    # This test only works until the largest mobile element is moved to an extremety
-    # The Johnson Trotter algorithm adresses this issue by changing direction on elements
+    # Only works until the largest element is moved to an extremity
     def nextPermutationTests():
         print("\nTests 2 E):")
         originalList = []
@@ -316,162 +312,11 @@ def PermutationClassTests():
         print("Next Permutation:",valueList)     
            
         
+
+
     initTests()
     isMobileTests()
     anyMobileTests()
     largestMobileTests()
     nextPermutationTests()
-    print("\n###---------------------------------------------------###")
-    print("###                      TESTS END                    ###")
-    print("###---------------------------------------------------###\n")
-
-   
-
-### --------------------------------------------------------------------------------- ###
-### --------------------------------------------------------------------------------- ###
-###                             TESTS PART B                                          ###
-### --------------------------------------------------------------------------------- ###
-### --------------------------------------------------------------------------------- ###
-
-# print statements added for readability in the test results
-def testPermute():
-    permute(1)
-    print()
-    permute(2)
-    print()
-    permute(3)
-    print()
-    permute(4)
-    print()
-    permute(5)
-
-def testPermute2():
-    permute2(1)
-    print()
-    permute2(2)
-    print()
-    permute2(3)
-    print()
-    permute2(4)
-    print()
-    permute2(5)
-
-### --------------------------------------------------------------------------------- ###
-### --------------------------------------------------------------------------------- ###
-###                             TESTS PART C                                          ###
-### --------------------------------------------------------------------------------- ###
-### --------------------------------------------------------------------------------- ###
-
-def permuteTimeTest():
-    try:
-        totalTime1 = 0
-        totalTime2 = 0
-        totalTime3 = 0
-        totalTime4 = 0
-        totalTime5 = 0
-        totalTime6 = 0
-        testAll = False
-        print("Since some time tests take a long time, choose...")
-        numElements = input("For what 'n' do you want to run a time test? (type 'all' to get n=6-10) ")
-        if "a" in numElements:
-            testAll = True
-            for i in range(6, 11):
-                print("i:", i)
-                if i == 6:
-                    totalTime1 = permuteTime(i)
-                elif i == 7:
-                    totalTime2 = permuteTime(i)
-                elif i == 8:
-                    totalTime3 = permuteTime(i)
-                elif i == 9:
-                    totalTime4 = permuteTime(i)
-                elif i == 10:
-                    totalTime5 = permuteTime(i)
-        else:
-            numElements = int(numElements)
-            totalTime6 = permuteTime(numElements)
-            print("Total time for", numElements, "elements:", totalTime6, "seconds")
-        if testAll:
-            print("Total time for 6 elements:", totalTime1, "seconds")
-            print("Total time for 7 elements:", totalTime2, "seconds")
-            print("Total time for 8 elements:", totalTime3, "seconds")
-            print("Total time for 9 elements:", totalTime4, "seconds")
-            print("Total time for 10 elements:", totalTime5, "seconds")
-    except:
-        print("Invalid input.")
-        print("Make sure the input is an int or a string containing the letter 'a'.")
-
-def permuteTimeTest2():
-    try:
-        totalTime1 = 0
-        totalTime2 = 0
-        totalTime3 = 0
-        totalTime4 = 0
-        totalTime5 = 0
-        totalTime6 = 0
-        testAll = False
-        print("Since some time tests take a long time, choose...")
-        #numElements = input("For what 'n' do you want to run a time test? (type 'all' to get n=6-10) ")
-        if "a" in numElements:
-            testAll = True
-            for i in range(6, 8):
-                print("i:", i)
-                if i == 6:
-                    totalTime1 = permuteTime2(i)
-                elif i == 7:
-                    totalTime2 = permuteTime2(i)
-                elif i == 8:
-                    totalTime3 = permuteTime2(i)
-                elif i == 9:
-                    totalTime4 = permuteTime2(i)
-                elif i == 10:
-                    totalTime5 = permuteTime2(i)
-        else:
-            numElements = int(numElements)
-            totalTime6 = permuteTime2(numElements)
-            print("Total time for", numElements, "elements:", totalTime6, "seconds")
-        if testAll:
-            print("Total time for 6 elements:", totalTime1, "seconds")
-            print("Total time for 7 elements:", totalTime2, "seconds")
-            print("Total time for 8 elements:", totalTime3, "seconds")
-            print("Total time for 9 elements:", totalTime4, "seconds")
-            print("Total time for 10 elements:", totalTime5, "seconds")
-            return totalTime1, totalTime2, totalTime3, totalTime4, totalTime5
-    except:
-        print("Invalid input.")
-        print("Make sure the input is an int or a string containing the letter 'a'.")
-        #permuteTimeTest2()
-
-def compareTimes():
-    time1, time2, time3, time4, time5 = permuteTimeTest2()
-    print(time1)
-
-### ----------------------------- ###
-###       CALL TEST FUNCTIONS     ###
-### ----------------------------- ###
-
-#ElementClassTests()
-#PermutationClassTests()  
-#testPermute()
-#testPermute2()
-#permuteTimeTest()
-#permuteTimeTest2()
-compareTimes()
-
-# myElement6 = Element(13, -1)
-# myElement7 = Element(12, -1)
-# myElement8 = Element(11, -1)
-# myElement9 = Element(10, -1)
-
-# myElement10 = Element(4, -1)
-# myElement11 = Element(14, 1)
-# myElement12 = Element(5, -1)
-# myElement13 = Element(13, -1)
-
-# myPerm2 = Permutation([myElement6,myElement7, myElement8, myElement9])
-# myPerm3 = Permutation([myElement10, myElement11, myElement12, myElement13])
-# myPerm2.isAnyMobile()
-# myPerm3.largestMobile()
-# myPerm3.nextPermutation()
-# #myPerm2.nextPermutation()
-# #myPerm.nextPermutation()
+#PermutationClassTests()     # Put a comment in front to disable all tests
