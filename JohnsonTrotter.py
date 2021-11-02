@@ -372,31 +372,27 @@ def permuteTimeTest():
         totalTime6 = 0
         testAll = False
         print("Since some time tests take a long time, choose...")
-        numElements = input("For what 'n' do you want to run a time test? (type 'all' to get n=6-10) ")
-        if "a" in numElements:
-            testAll = True
-            for i in range(6, 11):
-                print("i:", i)
-                if i == 6:
-                    totalTime1 = permuteTime(i)
-                elif i == 7:
-                    totalTime2 = permuteTime(i)
-                elif i == 8:
-                    totalTime3 = permuteTime(i)
-                elif i == 9:
-                    totalTime4 = permuteTime(i)
-                elif i == 10:
-                    totalTime5 = permuteTime(i)
-        else:
-            numElements = int(numElements)
-            totalTime6 = permuteTime(numElements)
-            print("Total time for", numElements, "elements:", totalTime6, "seconds")
+        #numElements = input("For what 'n' do you want to run a time test? (type 'all' to get n=6-10) ")
+        testAll = True
+        for i in range(6, 11):
+            print("i:", i)
+            if i == 6:
+                totalTime1 = permuteTime(i)
+            elif i == 7:
+                totalTime2 = permuteTime(i)
+            elif i == 8:
+                totalTime3 = permuteTime(i)
+            elif i == 9:
+                totalTime4 = permuteTime(i)
+            elif i == 10:
+                totalTime5 = permuteTime(i)
         if testAll:
-            print("Total time for 6 elements:", totalTime1, "seconds")
-            print("Total time for 7 elements:", totalTime2, "seconds")
-            print("Total time for 8 elements:", totalTime3, "seconds")
-            print("Total time for 9 elements:", totalTime4, "seconds")
-            print("Total time for 10 elements:", totalTime5, "seconds")
+            # print("Total time for 6 elements:", totalTime1, "seconds")
+            # print("Total time for 7 elements:", totalTime2, "seconds")
+            # print("Total time for 8 elements:", totalTime3, "seconds")
+            # print("Total time for 9 elements:", totalTime4, "seconds")
+            # print("Total time for 10 elements:", totalTime5, "seconds")
+            return totalTime1, totalTime2, totalTime3, totalTime4, totalTime5
     except:
         print("Invalid input.")
         print("Make sure the input is an int or a string containing the letter 'a'.")
@@ -412,30 +408,27 @@ def permuteTimeTest2():
         testAll = False
         print("Since some time tests take a long time, choose...")
         #numElements = input("For what 'n' do you want to run a time test? (type 'all' to get n=6-10) ")
-        if "a" in numElements:
-            testAll = True
-            for i in range(6, 8):
-                print("i:", i)
-                if i == 6:
-                    totalTime1 = permuteTime2(i)
-                elif i == 7:
-                    totalTime2 = permuteTime2(i)
-                elif i == 8:
-                    totalTime3 = permuteTime2(i)
-                elif i == 9:
-                    totalTime4 = permuteTime2(i)
-                elif i == 10:
-                    totalTime5 = permuteTime2(i)
-        else:
-            numElements = int(numElements)
-            totalTime6 = permuteTime2(numElements)
-            print("Total time for", numElements, "elements:", totalTime6, "seconds")
+        
+        testAll = True
+        for i in range(6, 11):
+            print("i:", i)
+            if i == 6:
+                totalTime1 = permuteTime2(i)
+            elif i == 7:
+                totalTime2 = permuteTime2(i)
+            elif i == 8:
+                totalTime3 = permuteTime2(i)
+            elif i == 9:
+                totalTime4 = permuteTime2(i)
+            elif i == 10:
+                totalTime5 = permuteTime2(i)
+        
         if testAll:
-            print("Total time for 6 elements:", totalTime1, "seconds")
-            print("Total time for 7 elements:", totalTime2, "seconds")
-            print("Total time for 8 elements:", totalTime3, "seconds")
-            print("Total time for 9 elements:", totalTime4, "seconds")
-            print("Total time for 10 elements:", totalTime5, "seconds")
+            # print("Total time for 6 elements:", totalTime1, "seconds")
+            # print("Total time for 7 elements:", totalTime2, "seconds")
+            # print("Total time for 8 elements:", totalTime3, "seconds")
+            # print("Total time for 9 elements:", totalTime4, "seconds")
+            # print("Total time for 10 elements:", totalTime5, "seconds")
             return totalTime1, totalTime2, totalTime3, totalTime4, totalTime5
     except:
         print("Invalid input.")
@@ -443,8 +436,82 @@ def permuteTimeTest2():
         #permuteTimeTest2()
 
 def compareTimes():
-    time1, time2, time3, time4, time5 = permuteTimeTest2()
-    print(time1)
+    withArray = 0
+    noArray = 0
+    # with array times
+    startTime = time.time()
+    for i in range(0,5):
+        inArray = 0
+        outArray = 0
+        time1, time2, time3, time4, time5 = permuteTimeTest()
+        time6, time7, time8, time9, time10 = permuteTimeTest2()
+
+        print(time1, time2, time3, time4, time5)
+        if time1 < time6:
+            print("in array is faster 1")
+            inArray += 1
+        elif time6 < time1:
+            print("no array is faster 1")
+            outArray += 1
+        
+        if time2 < time7:
+            print("in array is faster 2")
+            inArray += 1
+        elif time7 < time2:
+            print("no array is faster 2")
+            outArray += 1
+        
+        if time3 < time8:
+            print("in array is faster 3")
+            inArray += 1
+        elif time8 < time3:
+            print("no array is faster 3")
+            outArray += 1
+        
+        if time4 < time9:
+            print("in array is faster 4")
+            inArray += 1
+        elif time9 < time4:
+            print("no array is faster 4")
+            outArray += 1
+
+        if time5 < time10:
+            print("in array is faster 5")
+            inArray += 1
+        elif time10 < time5:
+            print("no array is faster 5")
+            outArray += 1
+        
+        if inArray > outArray:
+            withArray += 1
+        elif outArray > inArray:
+            noArray += 1
+    endTime = time.time()
+    if withArray > noArray:
+        print("With array was faster")
+    elif noArray > withArray:
+        print("Without array was faster")
+    totTime = endTime - startTime
+    minCount = 0
+    # while totTime >= 60:
+    #     minCount = minCount + 1
+    #     totTime = totTime - 60
+    print("With array times:")
+    print("n = 6:", time1)
+    print("n = 7:", time2)
+    print("n = 8:", time3)
+    print("n = 9:", time4)
+    print("n = 10:", time5)
+    print("\nWithout array times")
+    print("n = 6:", time6)
+    print("n = 7:", time7)
+    print("n = 8:", time8)
+    print("n = 9:", time9)
+    print("n = 10:", time10)
+
+    print("Total test time: ", totTime, "seconds" )
+
+
 
 ### ----------------------------- ###
 ###       CALL TEST FUNCTIONS     ###
@@ -452,11 +519,11 @@ def compareTimes():
 
 #ElementClassTests()
 #PermutationClassTests()  
-#testPermute()
+testPermute()
 #testPermute2()
 #permuteTimeTest()
 #permuteTimeTest2()
-compareTimes()
+#compareTimes()
 
 # myElement6 = Element(13, -1)
 # myElement7 = Element(12, -1)
