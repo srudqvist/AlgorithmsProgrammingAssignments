@@ -17,7 +17,6 @@ class Node():
         self.left = None
         self.right = None
 
-
 ### ---------------------------- ### 
 ###        The Tree Class        ###
 ### ---------------------------- ###
@@ -77,7 +76,7 @@ class Tree:
         if self.root is not None:
             inorderList = []
             self.printInorderList(self.root, inorderList)
-            print(inorderList)
+            return inorderList
         
     def printInorderList(self, node, list):
         if node is not None:
@@ -85,12 +84,13 @@ class Tree:
             list.append(node.data)
             self.printInorderList(node.right, list)
             
+            
     # Preorder
     def printPreorderTree(self):
         if self.root is not None:
             preorderList = []
             self.printPreorderList(self.root, preorderList)
-            print(preorderList)
+            return preorderList
     
     def printPreorderList(self, node, list):
         if node is not None:
@@ -103,7 +103,7 @@ class Tree:
         if self.root is not None:
             postorderList = []
             self.printPostorderList(self.root, postorderList)
-            print(postorderList)
+            return postorderList
     
     def printPostorderList(self, node, list):
         if node is not None:
@@ -115,7 +115,9 @@ class Tree:
         leafList = []
         if self.root is not None:
             self.countLeavesList(self.root, leafList)
-            print(len(leafList))
+            return len(leafList)
+        else:
+            return 0
    
     def countLeavesList(self, node, leafList):
         if node is not None:
@@ -149,28 +151,93 @@ class Tree:
 ###       The Main Function      ###
 ### ---------------------------- ### 
 def main():
-    tree = Tree()
-    for value in [5, 3, 4, 9, 1, 6]:
-        tree.add(value)
-    print("Original")
-    tree.printTree()
-    print("Inorder")
-    tree.printInorderTree()
-    print("Preorder")
-    tree.printPreorderTree()
-    print("Postorder")
-    tree.printPostorderTree()
-    print("count leaves")
-    tree.countLeaves()
-    
-    # Find the smallest value in the tree
-   # node = tree.getRoot()
-    #if node is not None:
-     #   while node.left is not None:
-      #      node = node.left
-       # print("Smallest value is:", node.data)
+    try:
+
+        tree = Tree()
+    # for value in [5, 3, 4, 9, 1, 6]:
+        #    tree.add(value)
+        # [1,2,3,4,5,6,7,8]
+        # [7,2,11,5,10,3,6,9,1,8]
+        #["1","P","","50","200","40", "A", "#", "!", " ",""]
+        #7,2,11,5,10,3,6,9,1,8
+        #10,9,8,7,6,5,4,3,2,1
+        for value in [5, 3, 4, 9, 1, 6]:
+            tree.add(value)
+
+        print("Original")
+        tree.printTree()
+        print("Inorder")
+        print(tree.printInorderTree())
+        print("Preorder")
+        print(tree.printPreorderTree())
+        print("Postorder")
+        print(tree.printPostorderTree())
+        print("count leaves")
+        print(tree.countLeaves())
+    except TypeError:
+        print("Type str and int can't be mixed.")
+    except:
+        print("Something went wrong, please check the input.")
+
+
+### ---------------------------- ### 
+###             TESTS            ###
+### ---------------------------- ### 
+
+def testCase(testNumber, list, expectedResultPreorder, expectedResultInorder, expectedResultPostorder, expectedLeafCount):
+    try:
+
+        tree = Tree()
+        for value in list:
+            tree.add(value)
+
+        actualResultPreorder = tree.printPreorderTree()
+        actualResultInorder = tree.printInorderTree()
+        actualResultPostorder = tree.printPostorderTree()
+        actualLeafCount = tree.countLeaves()
+        
+        if actualResultPreorder == expectedResultPreorder:
+            print("Test", testNumber, "passed for pre-order.")
+        else:
+            print("Test", testNumber, "failed for pre-order.")
+
+        if actualResultInorder == expectedResultInorder:
+            print("Test", testNumber, "passed for in-order.")
+        else:
+            print("Test", testNumber, "failed for in-order.")
+
+        if actualResultPostorder == expectedResultPostorder:
+            print("Test", testNumber, "passed for post-order.")
+        else:
+            print("Test", testNumber, "failed for post-order.")
+        
+        if actualLeafCount == expectedLeafCount:
+            print("Test", testNumber, "passed the leaf count.")
+        else:
+            print("Test", testNumber, "failed the leaf count.")
+
+    except TypeError:
+        print("Test", testNumber,"could not be performed because type str and int can't be mixed.")
+    except:
+        print("Something went wrong, please check the input.")    
+
 
 def test():
-    pass
+    testCase(1, [1,2,3,4,5,6,7,8], [1,2,3,4,5,6,7,8], [1,2,3,4,5,6,7,8], [8,7,6,5,4,3,2,1], 1)
+    print()
+    testCase(2, [7,2,11,5,10,3,6,9,1,8], [7, 2, 1, 5, 3, 6, 11, 10, 9, 8], [1, 2, 3, 5, 6, 7, 8, 9, 10, 11], [1, 3, 6, 5, 2, 8, 9, 10, 11, 7],4)
+    print()
+    testCase(3, [], None, None, None, 0)
+    print()
 
-main()
+
+def myTests():
+    print("Additional Tests.")
+    testCase(4, [3], [3], [3], [3],1)
+    print()
+    testCase(5, ["D","B","C","F","A","E","G"], ["D","B","A","C","F","E","G"], ["A","B","C","D","E","F","G"], ["A","C","B","E","G","F","D"],4)
+    print()
+    testCase(6, [10,9,8,7,6,5,4,3,2,1], [10,9,8,7,6,5,4,3,2,1], [1,2,3,4,5,6,7,8,9,10], [1,2,3,4,5,6,7,8,9,10], 1)
+#main()
+test()
+myTests()
