@@ -519,8 +519,8 @@ def compareTimes():
 
 #ElementClassTests()
 #PermutationClassTests()  
-testPermute()
-#testPermute2()
+#testPermute()
+testPermute2()
 #permuteTimeTest()
 #permuteTimeTest2()
 #compareTimes()
